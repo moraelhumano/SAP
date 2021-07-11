@@ -5,33 +5,22 @@ import { db } from "../firebase";
 
 
 const Episode = (props) => {
-      const [links, setLinks] = useState([]);
-      //Este id para el parametro de la url
-      const {id} = useParams();
-      //Esta función hace la petición a firebase
-      const getLinks = async () => {
-        db.collection("links")
-        .onSnapshot((querySnapshot) => {
-        const docs = [];
-        querySnapshot.forEach((doc) => {
-          docs.push({ ...doc.data(), id: doc.id });
-        });
-        setLinks(docs);
-      });
-    };
-    useEffect(() => {
-      getLinks();
-    }, []);
+  const [link, setLink] = useState({});
+  //Este id para el parametro de la url
+  const {id} = useParams();
+  //Esta función hace la petición a firebase
+  const getLink = async () => {
+    db.collection('links').doc(id).get().then(doc => {
+      console.log(doc.data());
+      setLink(doc.data());
+    })
+  }
+  useEffect(() => {
+    getLink();
+  }, []);
   return (
     <>
-    {/* este link.map itera la respuesta, pero muestra info ajena a la del id */}
-      {links.map((link) => (
-        <p>
-          {link.id}
-        </p>
-      ))}
-      {/* Este id, es el de useParams, pero mostrado en pantalla */}
-      {id}
+      <p>{ link.episodeName }</p>
     </>
   );
 };
