@@ -82,7 +82,7 @@ const Episodes = () => {
             <div className="card-body">
               <div className="d-flex justify-content-between">
 
-                <Link to={`/episodio/${link.noEpisode}`}>
+                <Link to={`/episodio/${link.id}`}>
                   <h4>{link.episodeName}</h4>
                 </Link>                
                 <div>
